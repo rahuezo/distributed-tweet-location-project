@@ -1,12 +1,15 @@
-from configuration import TWEETS_TBNAME, TWEETS_COLUMNS
+from configuration import TWEETS_TBNAME, TWEETS_COLUMNS, RESULTS_DIR_PATH
 from nomenclature import get_chunk_name
 from files import get_tweets_from_file
 from database import Database
 from separation import chunk_files_by_day
 
+import os
 
-def create_db_and_tweets_tb(db_name): 
-    db = Database(db_name)
+
+def create_db_and_tweets_tb(db_name):
+    db_path = os.path.join(RESULTS_DIR_PATH, db_name) 
+    db = Database(db_path)
     tweets_tb = db.create_table(TWEETS_TBNAME, TWEETS_COLUMNS)
     return db
 
