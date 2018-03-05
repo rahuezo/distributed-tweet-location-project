@@ -45,15 +45,14 @@ if __name__ == '__main__':
         print '\nNo directory selected! Goodbye.\n'
         sys.exit()
 
-    print len(files)
-    # s = time.time()
+    s = time.time()
 
-    # if METHOD: 
-    #     parallel_importing(chunks)
-    # else:
-    #     raw_importing(chunks)
+    if METHOD: 
+        parallel_importing(chunks)
+    else:
+        raw_importing(chunks)
 
-    # print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
-    # print 'Method: {}, Size: {}\n'.format(METHOD_STR, TEST_SIZE)
+    print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
+    print 'Method: {}, Size: {}\n'.format(METHOD_STR, TEST_SIZE)
 
     
