@@ -54,5 +54,3 @@ if __name__ == '__main__':
 
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
     print 'Method: {}, Size: {}\n'.format(METHOD_STR, TEST_SIZE)
-
-    

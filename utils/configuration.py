@@ -12,6 +12,24 @@ TWEETS_COLUMNS = 'user_id INT, tweet_text TEXT, tweet_location TEXT, tweet_date 
 RESULTS_DIR = 'results'
 RESULTS_DIR_PATH = os.path.join(ROOT_DIR, RESULTS_DIR)
 
+
+USER_FIPS_DB = 'aggregated_data.db'
+USER_FIPS_TBNAME = 'users_fips'
+USER_FIPS_COLUMNS = 'user_id INT, fips INT'
+
+USER_FIPS_COLUMNS_UNIQUE = 'user_id INT, fips INT, tweet_date TEXT, UNIQUE(user_id, fips)'
+
+
+MOVERS_DB_NAME = 'intermediate_steps.db'
+MOVERS_TBNAME = 'movers'
+MOVERS_COLUMNS = 'user_id INT'
+
+
+USERS_TBNAME = 'users'
+USERS_COLUMNS = 'user_id INT'
+
+
+
 if not os.path.exists(RESULTS_DIR_PATH): 
     os.makedirs(RESULTS_DIR_PATH)
     
