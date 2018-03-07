@@ -17,7 +17,9 @@ if __name__ == "__main__":
 
     s = time.time()
 
-    for db_file in dbs: 
+    for i, db_file in enumerate(dbs): 
+        print "Indexing db {} out of {}".format(i + 1, len(dbs))
+        
         db = Database(db_file)
         db.cursor.execute('CREATE INDEX IF NOT EXISTS user_idx ON tweets (user_id)')
 
