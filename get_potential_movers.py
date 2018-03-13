@@ -37,9 +37,11 @@ if __name__ == '__main__':
 
     user_chunks = chunkify(unique_users, n=10000)
 
-    for i, user_chunk in enumerate(user_chunks):
-        print "User chunk {} out of {}".format(i + 1, len(user_chunks))
-        
+    counter = 0
+
+    for user_chunk in user_chunks:
+        print "User chunk {} out of {}".format(counter + 1, len(unique_users) / 10000)
+
         aggregated_db.cursor.execute('BEGIN')
 
         for user in user_chunk:
@@ -47,6 +49,8 @@ if __name__ == '__main__':
                 aggregated_db.insert('INSERT INTO {tbn} VALUES(?)'.format(tbn=potential_movers_tb), (user,))
 
         aggregated_db.connection.commit()
+
+        counter += 1
 
     aggregated_db.connection.close()
 
