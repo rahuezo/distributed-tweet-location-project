@@ -37,8 +37,9 @@ if __name__ == '__main__':
 
     user_chunks = chunkify(unique_users, n=10000)
 
-    for user_chunk in user_chunks:
-
+    for i, user_chunk in enumerate(user_chunks):
+        print "User chunk {} out of {}".format(i + 1, len(user_chunks))
+        
         aggregated_db.cursor.execute('BEGIN')
 
         for user in user_chunk:
