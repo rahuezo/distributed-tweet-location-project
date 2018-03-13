@@ -1,4 +1,3 @@
-from utils.joiners import get_unique_users, get_user_locations
 from utils.configuration import MOVERS_DB_NAME, RESULTS_DIR_PATH, MOVERS_TBNAME
 from utils.separation import chunkify
 from utils.modulars import commit_movers_chunk, create_db_and_movers_tb, get_movers, get_locations_per_db
