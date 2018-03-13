@@ -20,16 +20,17 @@ USER_FIPS_COLUMNS = 'user_id INT, fips INT'
 USER_FIPS_COLUMNS_UNIQUE = 'user_id INT, fips INT, tweet_date TEXT, UNIQUE(user_id, fips)'
 
 
-MOVERS_DB_NAME = 'intermediate_steps.db'
+POTENTIAL_MOVERS_TBNAME = 'potential_movers'
+POTENTIAL_MOVERS_COLUMNS = 'user_id INT'
+
+MOVERS_DB_NAME = os.path.join(ROOT_DIR, 'actual_movers.db')
 MOVERS_TBNAME = 'movers'
-MOVERS_COLUMNS = 'user_id INT'
+MOVERS_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT, fips2 INT, date2 TEXT'
 
 
 USERS_TBNAME = 'users'
 USERS_COLUMNS = 'user_id INT'
 
 
-
 if not os.path.exists(RESULTS_DIR_PATH): 
     os.makedirs(RESULTS_DIR_PATH)
-    
