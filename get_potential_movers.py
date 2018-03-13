@@ -35,12 +35,12 @@ if __name__ == '__main__':
 
     unique_users = [user[0] for user in aggregated_db.select('SELECT DISTINCT user_id FROM {}'.format(USER_FIPS_TBNAME))][:TEST_SIZE]
 
-    user_chunks = chunkify(unique_users, n=10000)
+    user_chunks = [chunk for chunk in chunkify(unique_users, n=10000)]
 
-    counter = 0
+    # counter = 0
 
-    for user_chunk in user_chunks:
-        print "User chunk {} out of {}".format(counter + 1, len(unique_users) / 10000)
+    for i, user_chunk in enumerate(user_chunks):
+        print "User chunk {} out of {}".format(i + 1, len(user_chunks))
 
         aggregated_db.cursor.execute('BEGIN')
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
         aggregated_db.connection.commit()
 
-        counter += 1
+        # counter += 1
 
     aggregated_db.connection.close()
 
