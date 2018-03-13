@@ -31,7 +31,7 @@ if __name__ == '__main__':
     s = time.time()
 
     aggregated_db = Database(aggregated_data_db)
-    potential_movers_tb = aggregated_db.create_table(POTENTIAL_MOVERS_TBNAME + '_2', POTENTIAL_MOVERS_COLUMNS)
+    potential_movers_tb = aggregated_db.create_table(POTENTIAL_MOVERS_TBNAME, POTENTIAL_MOVERS_COLUMNS)
 
     unique_users = [user[0] for user in aggregated_db.select('SELECT DISTINCT user_id FROM {}'.format(USER_FIPS_TBNAME))][:TEST_SIZE]
 
