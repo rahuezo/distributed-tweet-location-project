@@ -33,8 +33,16 @@ USER_ID_TBNAME = 'movers'
 USER_ID_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT'
 
 
+USER_CHRONOLOGY_DB = os.path.join(RESULTS_DIR_PATH, 'user_chronology.db')
+USER_CHRONOLOGY_TB = 'user_fips'
+USER_CHRONOLOGY_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT'
+
 USERS_TBNAME = 'users'
 USERS_COLUMNS = 'user_id INT'
+
+
+
+NUMBER_OF_UNIQUE_USERS = 141966518
 
 
 if not os.path.exists(RESULTS_DIR_PATH): 
