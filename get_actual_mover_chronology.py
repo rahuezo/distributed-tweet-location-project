@@ -55,10 +55,13 @@ if __name__ == '__main__':
 
     while True:         
         fips_rows = movers_db.cursor.fetchmany(1000)
-        if not fips_rows: break 
+        if not fips_rows: 
+            print "There are no more rows to process.\n"
+            break 
         chronology_db.cursor.execute('BEGIN')
         chronology_db.insert('INSERT INTO {tbn} VALUES(?, ?, ?)'.format(tbn=chronology_tb), fips_rows, many=True)
         chronology_db.connection.commit() 
+        print "Inserted row.\n"
     
     # uid_range = get_user_id_range(movers_db)
     
