@@ -1,13 +1,12 @@
-from utils.modulars import get_users_in_db, get_user_field, commit_user_fips
-from utils.configuration import POTENTIAL_MOVERS_TBNAME, MOVERS_DB_NAME, RESULTS_DIR_PATH, MOVERS_TBNAME, MOVERS_COLUMNS
+from utils.configuration import POTENTIAL_MOVERS_TBNAME, MOVERS_DB_NAME, MOVERS_TBNAME, MOVERS_COLUMNS
 from utils.separation import chunkify
 from utils.database import Database
-from utils.validation import is_potential_mover
 from utils.locating import are_far_apart, get_centroids
 
-import multiprocessing as mp 
 import tkFileDialog as fd
-import time, sys, os
+import time
+import sys
+
 
 if len(sys.argv) > 1: 
     TEST_SIZE = int(sys.argv[1])

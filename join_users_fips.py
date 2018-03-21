@@ -1,16 +1,15 @@
-from utils.modulars import save_unique_users_per_db
 from utils.database import Database
 from utils.configuration import USER_FIPS_TBNAME, USER_FIPS_DB, USER_FIPS_COLUMNS_UNIQUE, RESULTS_DIR_PATH
-from datetime import datetime
 
-
-import multiprocessing as mp 
 import tkFileDialog as fd
-import time, sys, os
+import time
+import sys
+import os
 
 
 def get_date_from_path(path): 
-    return db_file.split('/')[-1][:-3].replace('_', '-')
+    return path.split('/')[-1][:-3].replace('_', '-')
+
 
 if __name__ == "__main__":
     try: 

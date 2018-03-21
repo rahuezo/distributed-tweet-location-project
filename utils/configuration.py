@@ -27,6 +27,11 @@ MOVERS_DB_NAME = os.path.join(RESULTS_DIR_PATH, 'actual_movers.db')
 MOVERS_TBNAME = 'movers'
 MOVERS_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT, fips2 INT, date2 TEXT'
 
+USER_ID_DBS_PATH = os.path.join(RESULTS_DIR_PATH, 'users') 
+USER_ID_DB_NAME = os.path.join(USER_ID_DBS_PATH, '{}_{}.db')
+USER_ID_TBNAME = 'movers'
+USER_ID_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT'
+
 
 USERS_TBNAME = 'users'
 USERS_COLUMNS = 'user_id INT'
@@ -34,3 +39,6 @@ USERS_COLUMNS = 'user_id INT'
 
 if not os.path.exists(RESULTS_DIR_PATH): 
     os.makedirs(RESULTS_DIR_PATH)
+
+if not os.path.exists(USER_ID_DBS_PATH): 
+    os.makedirs(USER_ID_DBS_PATH)

@@ -112,9 +112,3 @@ def commit_user_fips(db, users_fips):
     db.cursor.execute('BEGIN')
     db.cursor.executemany('INSERT INTO {tbn} VALUES (?, ?)'.format(tbn=USER_FIPS_TBNAME), users_fips)
     db.connection.commit()
-   
-
-    
-
-
-    
