@@ -6,6 +6,7 @@ from utils.splitting import get_user_id_ranges, get_user_id_range, get_user_db_n
 from utils.validation import in_range
 
 from utils.timing import str2date
+from math import ceil
 
 import tkFileDialog as fd
 import multiprocessing as mp
@@ -14,8 +15,14 @@ import sys, os
 
 
 def get_user_chronology(user_id, db, centroids): 
+    s = time.time()
+
     fips_list = sorted([fips for fips in db.select('SELECT fips1, date1 FROM user_fips WHERE user_id={}'.format(user_id))], key=lambda x: str2date(x[1])) 
+
+    print "Grabbing user fips_list took {}s.".format(round(time.time() - s, 2))
     
+    s = time.time()
+
     home = fips_list[0]
     records = set(((user_id, ) + home,))
 
@@ -27,6 +34,7 @@ def get_user_chronology(user_id, db, centroids):
                 if are_far_apart(centroids, fips1, fips2): 
                     home = fips_list[j]
                     records.add((user_id, ) + home)
+    print "Getting user moves took {}s.".format(round(time.time() - s, 2))
     return list(records)
 
 
@@ -34,7 +42,7 @@ def process_user_chunk_chronology(user_chunk, db, centroids):
     db.cursor.execute('BEGIN')
 
     for i, user_id in enumerate(user_chunk):  
-        if ((i / len(user_chunk)) * 100) % 25 == 0 and i > 0: 
+        if int(ceil((float(i) / len(user_chunk))*100)) % 25 == 0 or i == len(user_chunk) - 1: 
             print "\tProcessing user {} out of {} users".format(i + 1, len(user_chunk))
         db.insert('INSERT INTO user_chronology VALUES(?, ?, ?)', get_user_chronology(user_id, db, centroids), many=True)
     
@@ -75,7 +83,7 @@ if __name__ == '__main__':
     user_chunks = list(chunkify(unique_users, n=100))
 
     for i, user_chunk in enumerate(user_chunks): 
-        print "Processing chunk {} out of {}".format(i + 1, len(user_chunks))
+        print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks))
 
         process_user_chunk_chronology(user_chunk, chronology_db, centroids)
           
