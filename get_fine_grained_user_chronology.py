@@ -40,12 +40,13 @@ def get_user_chronology(user_id, db, centroids, debug=False):
     return records
 
 
-def process_user_chunk_chronology(user_chunk, db, centroids):
+def process_user_chunk_chronology(user_chunk, db, centroids, debug=False):
     db.cursor.execute('BEGIN')
 
     for i, user_id in enumerate(user_chunk):  
-        if int(ceil((float(i) / len(user_chunk))*100)) % 25 == 0 or i == len(user_chunk) - 1: 
-            print "\tProcessing user {} out of {} users".format(i + 1, len(user_chunk))
+        if debug: 
+            if int(ceil((float(i) / len(user_chunk))*100)) % 25 == 0 or i == len(user_chunk) - 1: 
+                print "\tProcessing user {} out of {} users".format(i + 1, len(user_chunk))
         db.insert('INSERT INTO user_chronology VALUES(?, ?, ?)', get_user_chronology(user_id, db, centroids), many=True)
     
     db.connection.commit()
