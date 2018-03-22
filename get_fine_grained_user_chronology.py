@@ -85,7 +85,8 @@ if __name__ == '__main__':
     user_chunks = list(chunkify(unique_users, n=100))
 
     for i, user_chunk in enumerate(user_chunks): 
-        print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks))
+        if int(ceil((float(i) / len(user_chunks))*100)) % 25 == 0 or i == len(user_chunks) - 1:
+            print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks))
 
         process_user_chunk_chronology(user_chunk, chronology_db, centroids)
           
