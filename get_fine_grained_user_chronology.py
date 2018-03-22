@@ -33,7 +33,9 @@ def get_user_chronology(user_id, db, centroids):
 def process_user_chunk_chronology(user_chunk, db, centroids):
     db.cursor.execute('BEGIN')
 
-    for user_id in user_chunk:  
+    for i, user_id in enumerate(user_chunk):  
+        if ((i / len(user_chunk)) * 100) % 25 == 0 and i > 0: 
+            print "\tProcessing user {} out of {} users".format(i + 1, len(user_chunk))
         db.insert('INSERT INTO user_chronology VALUES(?, ?, ?)', get_user_chronology(user_id, db, centroids), many=True)
     
     db.connection.commit()
@@ -74,7 +76,7 @@ if __name__ == '__main__':
 
     for i, user_chunk in enumerate(user_chunks): 
         print "Processing chunk {} out of {}".format(i + 1, len(user_chunks))
-        
+
         process_user_chunk_chronology(user_chunk, chronology_db, centroids)
           
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
