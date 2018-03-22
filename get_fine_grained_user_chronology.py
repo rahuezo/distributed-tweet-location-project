@@ -19,7 +19,7 @@ def get_user_chronology(user_id, db, centroids):
 
     fips_list = sorted([fips for fips in db.select('SELECT fips1, date1 FROM user_fips WHERE user_id={}'.format(user_id))], key=lambda x: str2date(x[1])) 
 
-    print "Grabbing user fips_list took {}s.".format(round(time.time() - s, 2))
+    print "\t\tGrabbing user fips_list took {}s.".format(round(time.time() - s, 2))
     
     s = time.time()
 
@@ -34,7 +34,7 @@ def get_user_chronology(user_id, db, centroids):
                 if are_far_apart(centroids, fips1, fips2): 
                     home = fips_list[j]
                     records.add((user_id, ) + home)
-    print "Getting user moves took {}s.".format(round(time.time() - s, 2))
+    print "\t\tGetting user moves took {}s.\n\n".format(round(time.time() - s, 2))
     return list(records)
 
 
