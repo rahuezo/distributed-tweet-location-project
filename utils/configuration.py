@@ -40,7 +40,7 @@ USER_CHRONOLOGY_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT'
 USERS_TBNAME = 'users'
 USERS_COLUMNS = 'user_id INT'
 
-MOVERS_TWEETS_DB = os.path.join(RESULTS_DIR_PATH, 'mover_tweets.db')
+MOVERS_TWEETS_DB_PATH = os.path.join(RESULTS_DIR_PATH, 'movers')
 
 NUMBER_OF_UNIQUE_USERS = 141966518
 
@@ -50,3 +50,6 @@ if not os.path.exists(RESULTS_DIR_PATH):
 
 if not os.path.exists(USER_ID_DBS_PATH): 
     os.makedirs(USER_ID_DBS_PATH)
+
+if not os.path.exists(MOVERS_TWEETS_DB_PATH): 
+    os.makedirs(MOVERS_TWEETS_DB_PATH)
