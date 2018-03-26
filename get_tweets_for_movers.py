@@ -36,7 +36,9 @@ def process_db_file(user_chunks, tweet_db_file):
     
     current_tweets_db = Database(tweet_db_file)
 
-    for user_chunk in user_chunks: 
+    for i, user_chunk in enumerate(user_chunks):
+        if int(ceil((float(i) / len(user_chunks))*100)) % 25 == 0 or i == len(user_chunks) - 1:
+            print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks)) 
         process_user_chunk(user_chunk, current_tweets_db, mover_tweets_db)
 
     current_tweets_db.connection.close()
