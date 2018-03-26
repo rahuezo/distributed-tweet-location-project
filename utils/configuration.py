@@ -40,7 +40,7 @@ USER_CHRONOLOGY_COLUMNS = 'user_id INT, fips1 INT, date1 TEXT'
 USERS_TBNAME = 'users'
 USERS_COLUMNS = 'user_id INT'
 
-
+MOVERS_TWEETS_DB = os.path.join(RESULTS_DIR_PATH, 'mover_tweets.db')
 
 NUMBER_OF_UNIQUE_USERS = 141966518
 
