@@ -20,7 +20,7 @@ else:
 if len(sys.argv) > 2: 
     USER_CHUNK_SIZE = int(sys.argv[2])
 else: 
-    USER_CHUNK_SIZE = 1000
+    USER_CHUNK_SIZE = 100000
     
 def process_user_chunk(user_chunk, current_tweets_db, mover_tweets_db): 
     for user_id in user_chunk:     
@@ -35,15 +35,18 @@ def process_db_file(user_chunks, tweet_db_file):
     mover_tweets_db.cursor.execute('BEGIN')
     
     current_tweets_db = Database(tweet_db_file)
+    s = time.time()
 
     for i, user_chunk in enumerate(user_chunks):
         if int(ceil((float(i) / len(user_chunks))*100)) % 25 == 0 or i == len(user_chunks) - 1:
-            print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks)) 
+            print "\n\tProcessing chunk {} out of {}".format(i + 1, len(user_chunks)) 
         process_user_chunk(user_chunk, current_tweets_db, mover_tweets_db)
 
     current_tweets_db.connection.close()
     mover_tweets_db.connection.commit()
     mover_tweets_db.connection.close()
+
+    print '\n\tElapsed Time for db file: {}s\n'.format(round(time.time() - s, 2))
 
 
 if __name__ == '__main__':
@@ -72,17 +75,5 @@ if __name__ == '__main__':
         print "\nProcessing tweets db {} out of {}".format(i + 1, len(tweets_db_files))
         process_db_file(user_chunks, tweet_db_file)
         
-        
-        
-
-    # mover_tweets_db.cursor.execute('BEGIN')
-
-    # for i, user_chunk in enumerate(user_chunks): 
-    #     if int(ceil((float(i) / len(user_chunks))*100)) % 25 == 0 or i == len(user_chunks) - 1:
-    #         print "\nProcessing chunk {} out of {}".format(i + 1, len(user_chunks))
-    #     process_user_chunk(user_chunk, mover_tweets_db)
-
-    # mover_tweets_db.connection.commit()
-
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
     print 'Size: {}\tUser Chunks: {}\n'.format(TEST_SIZE if TEST_SIZE else 'All', USER_CHUNK_SIZE)
