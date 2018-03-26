@@ -17,6 +17,11 @@ if len(sys.argv) > 1:
 else: 
     TEST_SIZE = 100
 
+if len(sys.argv) > 2: 
+    USER_CHUNK_SIZE = int(sys.argv[2])
+else: 
+    USER_CHUNK_SIZE = 1000
+
 
 def process_user_chunk(user_chunk, mover_tweets_db): 
     for user_id in user_chunk:     
@@ -46,7 +51,7 @@ if __name__ == '__main__':
     else: 
         unique_users = [user[0] for user in chronology_db.select('SELECT DISTINCT user_id FROM user_chronology')]
 
-    user_chunks = list(chunkify(unique_users, n=10000))
+    user_chunks = list(chunkify(unique_users, n=USER_CHUNK_SIZE))
 
     mover_tweets_db = Database(MOVERS_TWEETS_DB)
     mover_tweets_tb = mover_tweets_db.create_table(TWEETS_TBNAME, TWEETS_COLUMNS)
@@ -61,4 +66,4 @@ if __name__ == '__main__':
     mover_tweets_db.connection.commit()
 
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
-    print 'Size: {}\n'.format(TEST_SIZE if TEST_SIZE else 'All')
+    print 'Size: {}\tUser Chunks: {}\n'.format(TEST_SIZE if TEST_SIZE else 'All', USER_CHUNK_SIZE)
