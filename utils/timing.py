@@ -13,12 +13,12 @@ def str2date(s):
 
 def fips_date_mapper(user_chronology_db, user_id, date): 
     results = user_chronology_db.select("""SELECT fips1 FROM user_chronology
-        WHERE date1 <= '{d}' AND user_id={uid} ORDER BY date1 DESC LIMIT 1""".format(d=date, uid=user_id)).fetchone()
+        WHERE user_id={uid} ORDER BY ABS(STRFTIME('%s', '{d}') - STRFTIME('%s', date1)) LIMIT 1""".format(d=date, uid=user_id)).fetchone()
 
     try: 
         return results[0]
-    except:     
-        print "Error occurred"
+    except Exception as e:     
+        print "Error occurred ", e
         print user_id, date
         print 
         sys.exit()
