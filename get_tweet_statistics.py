@@ -1,4 +1,4 @@
-from utils.configuration import MOVERS_TWEETS_DB_PATH, TWEETS_TBNAME, TWEETS_COLUMNS, WEATHER_INFO_DB_PATH, WEATHER_INFO_COLUMNS
+from utils.configuration import TWEET_STATS_DB, TWEET_STATS_TB, TWEET_STATS_COLUMNS
 from utils.separation import chunkify
 from utils.database import Database
 from utils.modulars import get_tweet_distribution
@@ -24,8 +24,12 @@ else:
     TWEET_BATCH_SIZE = 10000
 
 
-def process_tweet_batch(tweet_batch, user_chronology_db): 
-    return map(lambda x: x + (is_weather(x[1]), ), tweet_batch)
+def process_user_chunk(user_chunk, weather_info_db): 
+    stats = set()
+
+    for user_id in user_chunk: 
+        stats.add(get_tweet_distribution(weather_info_db, user_id))
+    return stats
 
 
 if __name__ == '__main__':
@@ -40,18 +44,40 @@ if __name__ == '__main__':
 
     s = time.time()
 
+    stats_db = Database(TWEET_STATS_DB)
+    stats_tb = stats_db.create_table(TWEET_STATS_TB, TWEET_STATS_COLUMNS)
+
+    total_time = 0 
+
     for i, weather_info_db_file in enumerate(weather_info_db_files):
         print "Processing db file {} out of {}".format(i + 1, len(weather_info_db_files))
 
         weather_info_db = Database(weather_info_db_file)
 
         unique_users = [user[0] for user in weather_info_db.select('SELECT DISTINCT user_id FROM tweets')]
+        user_chunks = list(chunkify(unique_users, n=1000))
+        
+        stats_db.cursor.execute('BEGIN')
 
-        for user_id in unique_users: 
-            print get_tweet_distribution(weather_info_db, user_id)
-            print 
+        file_st = time.time()
+
+        for j, user_chunk in enumerate(user_chunks): 
+            if int(ceil((float(j) / len(user_chunks))*100)) % 25 == 0 or j == len(user_chunks) - 1:
+                print "\tProcessing chunk {} out of {}".format(j + 1, len(user_chunks))
+
+            stats_db.insert('INSERT INTO {tb} VALUES(?, ?, ?, ?, ?)'.format(tb=stats_tb), 
+                process_user_chunk(user_chunk, weather_info_db), many=True)  
+
+        elapsed = round(time.time() - file_st, 2)
+
+        total_time += elapsed
+
+        print '\n\tElapsed Time: {}s\t\tAvg. Time: {}s\n'.format(elapsed, round(float(total_time) / (i + 1), 2))      
+        print  
+            
+        stats_db.connection.commit()
 
         weather_info_db.connection.close()
+    stats_db.connection.close()
         
-    print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
-    print 'Size: {}\tTweet Batch Size: {}\n'.format(TEST_SIZE if TEST_SIZE else 'All', TWEET_BATCH_SIZE)
+    print '\nTotal Elapsed Time: {}s\n'.format(round(time.time() - s, 2))

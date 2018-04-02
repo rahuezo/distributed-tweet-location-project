@@ -47,17 +47,14 @@ WEATHER_INFO_COLUMNS = 'user_id INT, tweet_text TEXT, tweet_location TEXT, tweet
 
 NUMBER_OF_UNIQUE_USERS = 141966518
 
-TWEET_STATS_DB = os.path.join(RESULTS_DIR_PATH, 'movers', 'tweet_statistics.db')
+TWEET_STATS_DB = os.path.join(RESULTS_DIR_PATH, 'weather_info', 'tweet_statistics.db')
 TWEET_STATS_TB = 'statistics'
 TWEET_STATS_COLUMNS = 'user_id INT, date_text TEXT, total_tweets INT, weather_tweets INT, fips INT'
 
-
+# user_id, date, ntotal_tweets, nweather_tweets, fips
 
 if not os.path.exists(RESULTS_DIR_PATH): 
     os.makedirs(RESULTS_DIR_PATH)
-
-# if not os.path.exists(USER_ID_DBS_PATH): 
-#     os.makedirs(USER_ID_DBS_PATH)
 
 if not os.path.exists(MOVERS_TWEETS_DB_PATH): 
     os.makedirs(MOVERS_TWEETS_DB_PATH)
