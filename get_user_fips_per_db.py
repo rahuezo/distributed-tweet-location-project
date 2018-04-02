@@ -55,10 +55,12 @@ if __name__ == '__main__':
 
         processes = [pool.apply_async(process_single_db, args=(db_file,)) for db_file in dbs]
         
-        for p in processes: 
+        for i, p in enumerate(processes): 
+            print "db {} out of {}".format(i + 1, len(processes))
             p.get()
     else: 
-        for db_file in dbs: 
+        for i, db_file in enumerate(dbs): 
+            print "db {} out of {}".format(i + 1, len(dbs))
             process_single_db(db_file)
 
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))

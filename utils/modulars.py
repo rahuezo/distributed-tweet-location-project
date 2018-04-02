@@ -112,3 +112,10 @@ def commit_user_fips(db, users_fips):
     db.cursor.execute('BEGIN')
     db.cursor.executemany('INSERT INTO {tbn} VALUES (?, ?)'.format(tbn=USER_FIPS_TBNAME), users_fips)
     db.connection.commit()
+
+
+def get_tweet_distribution(weather_tweets_db, user_id): 
+    ntotal_tweets, date, fips = weather_tweets_db.select("""SELECT COUNT(*), SUBSTR(tweet_date, 0, 11), fips FROM tweets WHERE user_id={uid}""".format(uid=user_id)).fetchone() 
+    nweather_tweets = weather_tweets_db.select("""SELECT COUNT(weather) FROM tweets WHERE user_id={uid} AND weather=1""".format(uid=user_id)).fetchone()[0]
+
+    return user_id, date, ntotal_tweets, nweather_tweets, fips
