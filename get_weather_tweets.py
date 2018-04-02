@@ -45,8 +45,10 @@ if __name__ == '__main__':
     
     user_chronology_db = Database(user_chronology_db_file)
 
+    print 
+
     for i, mover_tweets_db_file in enumerate(mover_tweets_db_files):
-        print "\tProcessing db file {} out of {}".format(i + 1, len(mover_tweets_db_files))
+        print "Processing db file {} out of {}".format(i + 1, len(mover_tweets_db_files))
 
         mover_tweets_db = Database(mover_tweets_db_file)        
         
@@ -64,8 +66,8 @@ if __name__ == '__main__':
         s = time.time()
 
         while True: 
-            if int(ceil((float(processed_tweets) / ntweets)*100)) % 25 == 0 or processed_tweets == ntweets - 1: 
-                print "\t\t {} out of {}".format(processed_tweets, ntweets)
+            # if int(ceil((float(processed_tweets) / ntweets)*100)) % 25 == 0 or processed_tweets == ntweets - 1: 
+            print "\t\t {} out of {}".format(processed_tweets, ntweets)
 
             tweets = mover_tweets_db.cursor.fetchmany(TWEET_BATCH_SIZE)
             processed_tweets += len(tweets)
