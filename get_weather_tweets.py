@@ -46,7 +46,6 @@ if __name__ == '__main__':
     user_chronology_db = Database(user_chronology_db_file)
 
     for i, mover_tweets_db_file in enumerate(mover_tweets_db_files):
-        # if int(ceil((float(i) / len(mover_tweets_db_files))*100)) % 25 == 0 or i == len(mover_tweets_db_files) - 1: 
         print "\tProcessing db file {} out of {}".format(i + 1, len(mover_tweets_db_files))
 
         mover_tweets_db = Database(mover_tweets_db_file)        
@@ -62,6 +61,8 @@ if __name__ == '__main__':
 
         processed_tweets = 0 
 
+        s = time.time()
+
         while True: 
             if int(ceil((float(processed_tweets) / ntweets)*100)) % 25 == 0 or processed_tweets == ntweets - 1: 
                 print "\t\t {} out of {}".format(processed_tweets, ntweets)
@@ -73,6 +74,7 @@ if __name__ == '__main__':
                 weather_info_db.insert('INSERT INTO tweets VALUES(?, ?, ?, ?, ?, ?)', process_tweet_batch(tweets, user_chronology_db), many=True)  
             else: 
                 break 
+        print '\n\tElapsed Time for db file: {}s\n'.format(round(time.time() - s, 2))
         print 
         weather_info_db.connection.commit()
     user_chronology_db.connection.close()
