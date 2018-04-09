@@ -2,14 +2,14 @@ from configuration import (TWEETS_TBNAME, TWEETS_COLUMNS,
                             RESULTS_DIR_PATH, MOVERS_TBNAME,
                             MOVERS_COLUMNS, MOVERS_DB_NAME,
                             USERS_TBNAME, USERS_COLUMNS, 
-                            USER_FIPS_TBNAME, USER_FIPS_COLUMNS
+                            USER_FIPS_TBNAME, USER_FIPS_COLUMNS, STASH_PATH
                         )
 
 from nomenclature import get_chunk_name
 from files import get_tweets_from_file
 from database import Database
 from separation import chunk_files_by_day, chunkify
-from validation import is_mover
+from validation import is_mover, is_processed_file
 from joiners import get_user_locations
 
 
@@ -119,3 +119,23 @@ def get_tweet_distribution(weather_tweets_db, user_id):
     nweather_tweets = weather_tweets_db.select("""SELECT COUNT(weather) FROM tweets WHERE user_id={uid} AND weather=1""".format(uid=user_id)).fetchone()[0]
 
     return user_id, date, ntotal_tweets, nweather_tweets, fips
+
+def create_processed_stash(stash_path): 
+    if not os.path.exists(stash_path): 
+        open(stash_path, 'a').close()
+    return stash_path
+
+def load_processed_stash(): 
+    stash_path = create_processed_stash(STASH_PATH)
+    with open(stash_path, 'r') as stash_file:
+        return stash_file.read(), stash_path
+
+def add_to_processed_stash(f, stash_path): 
+    stash = load_processed_stash()
+
+    if not is_processed_file(f, stash): 
+        with open(stash_path, 'a') as stash_file: 
+            stash_file.write('{}\n'.format(f))
+
+
+

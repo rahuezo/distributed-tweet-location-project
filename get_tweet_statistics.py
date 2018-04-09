@@ -1,7 +1,8 @@
-from utils.configuration import TWEET_STATS_DB, TWEET_STATS_TB, TWEET_STATS_COLUMNS
+from utils.configuration import TWEET_STATS_DB, TWEET_STATS_TB, TWEET_STATS_COLUMNS, STASH_PATH
 from utils.separation import chunkify
 from utils.database import Database
-from utils.modulars import get_tweet_distribution
+from utils.modulars import get_tweet_distribution, load_processed_stash, add_to_processed_stash
+from utils.validation import is_processed_file
 
 from utils.timing import str2date
 from math import ceil
@@ -48,7 +49,13 @@ if __name__ == '__main__':
     stats_tb = stats_db.create_table(TWEET_STATS_TB, TWEET_STATS_COLUMNS)
 
     total_time = 0 
+    # stash, stash_path = load_processed_stash()
 
+    # get db_files that haven't been processed yet and that are complete
+    # u_weather_info_db_files = filter(lambda f: not is_processed_file(f, stash), weather_info_db_files)
+
+
+    # for i, weather_info_db_file in enumerate(weather_info_db_files):
     for i, weather_info_db_file in enumerate(weather_info_db_files):
         print "Processing db file {} out of {}".format(i + 1, len(weather_info_db_files))
 
@@ -78,6 +85,9 @@ if __name__ == '__main__':
         stats_db.connection.commit()
 
         weather_info_db.connection.close()
+
+        # add db file into list of processed files
+        # add_to_processed_stash(weather_info_db_file, stash_path)
     stats_db.connection.close()
         
     print '\nTotal Elapsed Time: {}s\n'.format(round(time.time() - s, 2))

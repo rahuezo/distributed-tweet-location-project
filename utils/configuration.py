@@ -51,6 +51,8 @@ TWEET_STATS_DB = os.path.join(RESULTS_DIR_PATH, 'weather_info', 'tweet_statistic
 TWEET_STATS_TB = 'statistics'
 TWEET_STATS_COLUMNS = 'user_id INT, date_text TEXT, total_tweets INT, weather_tweets INT, fips INT'
 
+STASH_PATH = os.path.join(RESULTS_DIR_PATH, 'stash.txt')
+
 # user_id, date, ntotal_tweets, nweather_tweets, fips
 
 if not os.path.exists(RESULTS_DIR_PATH): 

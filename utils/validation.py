@@ -10,6 +10,8 @@ def is_potential_mover(db, user_id, cnt=1):
 def in_range(value, current_range): 
     return current_range[0] <= int(value) < current_range[1]
 
+def is_processed_file(f, stash): 
+    return f in stash
 
 def is_weather(tweet_text):
     keywords = ['arid', 'aridity',
