@@ -1,2 +1,0 @@
-E:/distributed-tweet-location-project/results/weather_info/2014_03_23.db
-E:/distributed-tweet-location-project/results/weather_info/2014_03_22.db
