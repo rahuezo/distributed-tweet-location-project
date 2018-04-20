@@ -21,6 +21,7 @@ if __name__ == "__main__":
         print "Indexing db {} out of {}".format(i + 1, len(dbs))
         
         db = Database(db_file)
-        db.cursor.execute('CREATE INDEX IF NOT EXISTS user_idx ON tweets (user_id)')
+        db.cursor.execute('CREATE INDEX IF NOT EXISTS fips_idx ON statistics(fips)')
+        db.cursor.execute('CREATE INDEX IF NOT EXISTS date_idx ON statistics(date_text)')
 
     print '\nElapsed Time: {}s\n'.format(round(time.time() - s, 2))
