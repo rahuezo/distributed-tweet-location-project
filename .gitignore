@@ -1,0 +1,16 @@
+*.pyc
+*.db
+*.db-shm
+*.db-wal
+extracting_rdat_tmax_prcp/
+backup/
+.idea/
+.ipynb_checkpoints/
+*.ipynb
+*.iml
+*.xml
+*.csv
+*.Rdat
+*.rds
+*.sqlite3
+*.Rhistory
