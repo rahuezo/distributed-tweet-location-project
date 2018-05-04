@@ -5,3 +5,13 @@
 *.sqlite3
 *.ipynb
 *.csv
+extracting_rdat_tmax_prcp/
+backup/
+.idea/
+.ipynb_checkpoints/
+*.ipynb
+*.iml
+*.xml
+*.Rdat
+*.rds
+*.Rhistory
