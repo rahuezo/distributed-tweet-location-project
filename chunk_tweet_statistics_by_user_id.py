@@ -9,7 +9,7 @@ import multiprocessing as mp
 import time
 import sys, os
 
-NCHUNKS_FIPS = 100
+NCHUNKS_FIPS = 250000
 
 
 def process_users_chunk(chunk, stats_db_file):
