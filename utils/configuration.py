@@ -56,6 +56,7 @@ STASH_PATH = os.path.join(RESULTS_DIR_PATH, 'stash.txt')
 # user_id, date, ntotal_tweets, nweather_tweets, fips
 
 DISTRIBUTED_TWEET_STATS_PATH = os.path.join(WEATHER_INFO_DB_PATH, 'stats_by_fips')
+DISTRIBUTED_TWEET_STATS_USER_PATH = os.path.join(WEATHER_INFO_DB_PATH, 'stats_by_uids')
 
 AGGREGATED_TWEET_DATA_COLUMNS = 'user_id INT, date_text TEXT, fips INT, tmax REAL, prcp REAL, humidity REAL, total_tweets INT, weather_tweets INT'
 

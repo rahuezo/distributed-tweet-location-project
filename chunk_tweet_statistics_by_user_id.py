@@ -1,6 +1,6 @@
 from utils.separation import chunkify
 from utils.database import Database
-from utils.configuration import DISTRIBUTED_TWEET_STATS_PATH, TWEET_STATS_COLUMNS
+from utils.configuration import DISTRIBUTED_TWEET_STATS_USER_PATH, TWEET_STATS_COLUMNS
 from utils.timing import str2date
 from math import ceil
 
@@ -15,7 +15,7 @@ NCHUNKS_FIPS = 100
 def process_users_chunk(chunk, stats_db_file):
     db = Database(stats_db_file)
 
-    chunk_dbfile = os.path.join(DISTRIBUTED_TWEET_STATS_PATH, 'users_{}_{}.db'.format(chunk[0], chunk[-1]))
+    chunk_dbfile = os.path.join(DISTRIBUTED_TWEET_STATS_USER_PATH, 'users_{}_{}.db'.format(chunk[0], chunk[-1]))
     chunk_db = Database(chunk_dbfile)
 
     stats_tb = chunk_db.create_table('statistics', TWEET_STATS_COLUMNS)
