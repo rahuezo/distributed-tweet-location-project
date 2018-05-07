@@ -71,3 +71,6 @@ if not os.path.exists(WEATHER_INFO_DB_PATH):
 
 if not os.path.exists(DISTRIBUTED_TWEET_STATS_PATH):
     os.makedirs(DISTRIBUTED_TWEET_STATS_PATH)
+
+if not os.path.exists(DISTRIBUTED_TWEET_STATS_USER_PATH):
+    os.makedirs(DISTRIBUTED_TWEET_STATS_USER_PATH)
