@@ -23,6 +23,10 @@ def process_users_chunk(chunk, stats_db_file):
     chunk_db.cursor.execute('BEGIN')
 
     for uid in chunk:
+        if os.path.getsize(chunk_dbfile) >= 1e8: 
+            print "{} is larger than 100MB".format(chunk_dbfile)
+            break 
+
         results = db.select('SELECT * FROM statistics WHERE user_id={}'.format(uid))
         chunk_db.insert('INSERT INTO {} VALUES (?, ?, ?, ?, ?)'.format(stats_tb), results, many=True)
 
