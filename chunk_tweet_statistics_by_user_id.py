@@ -9,7 +9,7 @@ import multiprocessing as mp
 import time
 import sys, os
 
-NCHUNKS_FIPS = 250000
+NCHUNKS_USERS = 250000
 
 
 def process_users_chunk(chunk, stats_db_file):
@@ -23,7 +23,7 @@ def process_users_chunk(chunk, stats_db_file):
     chunk_db.cursor.execute('BEGIN')
 
     for uid in chunk:
-        if os.path.getsize(chunk_dbfile) >= 1e8: 
+        if os.path.getsize(chunk_dbfile.replace('.db', '.db-shm')) >= 1e8: 
             print "{} is larger than 100MB".format(chunk_dbfile)
             break 
 
@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     unique_users = sorted([uid[0] for uid in tweet_stats_db.select('SELECT DISTINCT user_id FROM statistics')])
 
-    user_chunks = list(chunkify(unique_users, n=NCHUNKS_FIPS))
+    user_chunks = list(chunkify(unique_users, n=NCHUNKS_USERS))
 
     pool = mp.Pool(processes=mp.cpu_count())
     processes = [pool.apply_async(process_users_chunk, args=(chunk, tweet_stats_db_file)) for chunk in user_chunks]
