@@ -31,3 +31,5 @@ def get_records_subset(sample_size=10000):
                 writer.writerows(records)
 
         db.connection.close()
+
+get_records_subset()
