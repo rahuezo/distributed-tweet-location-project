@@ -25,7 +25,7 @@ def get_records_subset(sample_size=10000):
         for i,db_file in enumerate(databases):
             print 'Db {} out of {} Dbs'.format(i + 1, len(databases))
             db = Database(db_file)
-            chosen_users = choose_n([user[0] for user in db.select('SELECT DISTINCT user_id FROM aggregated_tweet_data LIMIT {}',format(sample_size))])
+            chosen_users = choose_n([user[0] for user in db.select('SELECT DISTINCT user_id FROM aggregated_tweet_data LIMIT {}'.format(sample_size))])
 
             for uid in chosen_users: 
                 records = db.select('SELECT * FROM aggregated_tweet_data WHERE user_id={}'.format(uid))
