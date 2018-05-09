@@ -18,11 +18,12 @@ def get_records_subset(sample_size=10000):
     databases = fd.askopenfilenames(title="Choose 10 databases with stats by user")
     output_csv_path = fd.askdirectory(title="Choose csv output directory")
 
-    with open(os.path.join(output_csv_path, '1000 user sample.csv', 'wb')) as csv_file: 
+    with open(os.path.join(output_csv_path, '1000 user sample.csv'), 'wb') as csv_file: 
         writer = csv.writer(csv_file, delimiter=',')
         writer.writerow(['User ID', 'Date', 'Fips', 'tmax', 'prcp', 'humidity', 'Total Tweets', 'Weather Tweets'])
 
-        for db_file in databases: 
+        for i,db_file in enumerate(databases):
+            print 'Db {} out of {} Dbs'.format(i + 1, len(databases))
             db = Database(db_file)
             chosen_users = choose_n([user[0] for user in db.select('SELECT DISTINCT user_id FROM aggregated_tweet_data LIMIT {}',format(sample_size))])
 
