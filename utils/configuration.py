@@ -1,4 +1,9 @@
+from subprocess import call
 import os
+
+# check for updates when running by doing a git pull
+print '\nPulling updates...'
+call(['git', 'pull'])
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__)).replace('utils', '')
 

@@ -55,6 +55,15 @@ def commit_chunk(chunk):
         commit_tweets(f, db)
     db.connection.close()
 
+
+def commit_chunk2(chunk): 
+    db_name = get_chunk_name(chunk)
+    db = create_db_and_tweets_tb(db_name)
+    for f in chunk:         
+        commit_tweets(f, db)
+    db.connection.close()
+
+
 def commit_movers_chunk(chunk, movers_db, all_dbs): 
     # movers_db.cursor.execute('BEGIN')
 
